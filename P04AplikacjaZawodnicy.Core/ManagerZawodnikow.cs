@@ -270,5 +270,10 @@ namespace P04AplikacjaZawodnicy.Core
         {
             throw new NotImplementedException();
         }
+
+        public Zawodnik[] WygenerujZawodnikow(int numerStrony, int wielkoscStrony, string filtr)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

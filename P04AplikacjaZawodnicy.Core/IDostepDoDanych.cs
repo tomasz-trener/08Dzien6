@@ -19,6 +19,7 @@ namespace P04AplikacjaZawodnicy.Core
 
         Zawodnik[] Filtruj(string filtr);
         DaneWykresu WygenerujWykres(RodzajDanych rodzajDanych);
+        Zawodnik[] WygenerujZawodnikow(int numerStrony, int wielkoscStrony, string filtr);
 
         //https://github.com/tomasz-trener/08Dzien6
     }

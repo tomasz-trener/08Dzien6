@@ -48,12 +48,19 @@ namespace P04AplikacjaZawodnicy.Core
             return MapujZawodnik(wynik);
         }
 
-        public Zawodnik[] WygenerujZawodnikow(int numerStrony, int wielkoscStrony)
+        public Zawodnik[] WygenerujZawodnikow(int numerStrony, int wielkoscStrony,string filtr)
         {
             PolaczenieZBaza pzb = new PolaczenieZBaza();
-            string sql = $@"SELECT id_zawodnika, id_trenera,imie,nazwisko,kraj,data_ur,wzrost,waga from zawodnicy ORDER by id_zawodnika
-                          OFFSET({numerStrony} - 1) * 5 ROWS
-                            FETCH NEXT {wielkoscStrony} ROWS ONLY";
+            string sql = $@"SELECT id_zawodnika, id_trenera,imie,nazwisko,kraj,data_ur,wzrost,waga from zawodnicy 
+                        where imie like '%{filtr}% '
+                        or nazwisko like  '%{filtr}%'
+                        or kraj like '%{filtr}%'
+                        or data_ur like '%{filtr}%'
+                        or wzrost like '%{filtr}%'
+                        or waga like '%{filtr}%'
+                        ORDER by id_zawodnika
+                        OFFSET({numerStrony} - 1) * 5 ROWS
+                        FETCH NEXT {wielkoscStrony} ROWS ONLY";
 
             object[][] wynik = pzb.WykonajPolecenieSQL(sql);
             return MapujZawodnik(wynik);
