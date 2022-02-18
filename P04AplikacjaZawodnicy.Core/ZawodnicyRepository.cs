@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace P04AplikacjaZawodnicy.Core
 {
-   public class ZawodnicyRepository : IDostepDoDanych
+    public class ZawodnicyRepository : IDostepDoDanych
     {
         public void Dodaj(Zawodnik z)
         {
@@ -22,7 +22,7 @@ namespace P04AplikacjaZawodnicy.Core
             PolaczenieZBaza pzb = new PolaczenieZBaza();
 
             string sql = string.Format("update zawodnicy set imie='{0}',nazwisko = '{1}',kraj = '{2}',data_ur='{3}',wzrost={4}, waga={5} where id_zawodnika = {6}",
-                z.Imie, z.Nazwisko, z.Kraj, z.DataUrodzeniaFormat, z.Wzrost.ToString(), z.Waga.ToString(),z.Id_zawodnika);
+                z.Imie, z.Nazwisko, z.Kraj, z.DataUrodzeniaFormat, z.Wzrost.ToString(), z.Waga.ToString(), z.Id_zawodnika);
 
             pzb.WykonajPolecenieSQL(sql);
         }
@@ -38,7 +38,7 @@ namespace P04AplikacjaZawodnicy.Core
         {
             PolaczenieZBaza pzb = new PolaczenieZBaza();
             pzb.WykonajPolecenieSQL("delete zawodnicy where id_zawodnika = " + id);
-            
+
         }
 
         public Zawodnik[] WygenerujZawodnikow()
@@ -48,13 +48,24 @@ namespace P04AplikacjaZawodnicy.Core
             return MapujZawodnik(wynik);
         }
 
+        public Zawodnik[] WygenerujZawodnikow(int numerStrony, int wielkoscStrony)
+        {
+            PolaczenieZBaza pzb = new PolaczenieZBaza();
+            string sql = $@"SELECT id_zawodnika, id_trenera,imie,nazwisko,kraj,data_ur,wzrost,waga from zawodnicy ORDER by id_zawodnika
+                          OFFSET({numerStrony} - 1) * 5 ROWS
+                            FETCH NEXT {wielkoscStrony} ROWS ONLY";
+
+            object[][] wynik = pzb.WykonajPolecenieSQL(sql);
+            return MapujZawodnik(wynik);
+        }
+
         public Zawodnik[] WygenerujZawodnikow(string nazwaKolumnySortowanie)
         {
             PolaczenieZBaza pzb = new PolaczenieZBaza();
             object[][] wynik = pzb.WykonajPolecenieSQL("SELECT id_zawodnika, id_trenera,imie,nazwisko,kraj,data_ur,wzrost,waga from zawodnicy order by " + nazwaKolumnySortowanie);
             return MapujZawodnik(wynik);
         }
-        
+
 
         public DaneWykresu WygenerujWykres(RodzajDanych rodzajDanych)
         {
@@ -102,10 +113,10 @@ namespace P04AplikacjaZawodnicy.Core
                 Zawodnik z = new Zawodnik();
 
                 z.Id_zawodnika = (int)wynik[i][0];
-                
-                if(wynik[i][1] != DBNull.Value)
+
+                if (wynik[i][1] != DBNull.Value)
                     z.Id_trenera = (int)wynik[i][1];
-                
+
                 z.Imie = (string)wynik[i][2];
                 z.Nazwisko = (string)wynik[i][3];
                 z.Kraj = (string)wynik[i][4];
