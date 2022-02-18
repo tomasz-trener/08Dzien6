@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace P04AplikacjaZawodnicy
 {
@@ -23,6 +24,7 @@ namespace P04AplikacjaZawodnicy
             foreach (var k in Zawodnik.Kolumny)
                 clbKolumny.Items.Add(k.Nazwa, k.Widocznosc);
 
+            cbRodzajPracy.SelectedIndex = 2;
         }
 
         private void btnWczytaj_Click(object sender, EventArgs e)
@@ -36,7 +38,28 @@ namespace P04AplikacjaZawodnicy
             else
                 throw new Exception("Nieznany tryb importu");
 
-                Odswiez();
+            Odswiez();
+            wygenerujWykres();
+        }
+
+        private void wygenerujWykres()
+        {
+            RodzajDanych rd = RodzajDanych.Wzrost;
+
+            Series seria = new Series(rd.ToString());
+            seria.ChartType = SeriesChartType.Column;
+            seria.IsVisibleInLegend = false;
+            DaneWykresu dw= iDostepDoDanych.WygenerujWykres(rd);
+
+            wykres.Series.Clear();
+
+            seria.Points.DataBindXY(dw.OsX, dw.OsY);
+            wykres.Series.Add(seria);
+
+            wykres.ChartAreas[0].AxisX.Interval = 1;
+            wykres.ChartAreas[0].AxisX.LabelStyle.Angle = 90;
+
+            
         }
 
         public void Odswiez(string kolumna = null) // ponownie pobiera zawodnikow z pliku 

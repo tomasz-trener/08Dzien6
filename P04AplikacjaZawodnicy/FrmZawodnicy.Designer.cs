@@ -29,6 +29,9 @@ namespace P04AplikacjaZawodnicy
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.txtSciezka = new System.Windows.Forms.TextBox();
             this.btnWczytaj = new System.Windows.Forms.Button();
             this.lbDane = new System.Windows.Forms.ListBox();
@@ -41,7 +44,9 @@ namespace P04AplikacjaZawodnicy
             this.btnNowy = new System.Windows.Forms.Button();
             this.ofdOtwiwarciePliku = new System.Windows.Forms.OpenFileDialog();
             this.cbRodzajPracy = new System.Windows.Forms.ComboBox();
+            this.wykres = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wykres)).BeginInit();
             this.SuspendLayout();
             // 
             // txtSciezka
@@ -147,7 +152,6 @@ namespace P04AplikacjaZawodnicy
             // 
             // cbRodzajPracy
             // 
-            this.cbRodzajPracy.FormattingEnabled = true;
             this.cbRodzajPracy.Items.AddRange(new object[] {
             "Plik lokalny",
             "Plik zdalny (tylko do odczytu)",
@@ -157,11 +161,28 @@ namespace P04AplikacjaZawodnicy
             this.cbRodzajPracy.Size = new System.Drawing.Size(116, 21);
             this.cbRodzajPracy.TabIndex = 25;
             // 
+            // wykres
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.wykres.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.wykres.Legends.Add(legend2);
+            this.wykres.Location = new System.Drawing.Point(481, 21);
+            this.wykres.Name = "wykres";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.wykres.Series.Add(series2);
+            this.wykres.Size = new System.Drawing.Size(336, 244);
+            this.wykres.TabIndex = 26;
+            this.wykres.Text = "chart1";
+            // 
             // FrmZawodnicy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 290);
+            this.ClientSize = new System.Drawing.Size(842, 290);
+            this.Controls.Add(this.wykres);
             this.Controls.Add(this.cbRodzajPracy);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnUstawSciezke);
@@ -171,6 +192,7 @@ namespace P04AplikacjaZawodnicy
             this.Name = "FrmZawodnicy";
             this.Text = "Zawodnicy";
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.wykres)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,6 +212,7 @@ namespace P04AplikacjaZawodnicy
         private System.Windows.Forms.Button btnNowy;
         private System.Windows.Forms.OpenFileDialog ofdOtwiwarciePliku;
         private System.Windows.Forms.ComboBox cbRodzajPracy;
+        private System.Windows.Forms.DataVisualization.Charting.Chart wykres;
     }
 }
 
